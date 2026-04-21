@@ -3,763 +3,1482 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wavelength – Someone to Talk To</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Wavelength – You Deserve to Be Heard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --teal: #2ec4c4;
-    --teal-dark: #1a9999;
-    --orange: #f46b2b;
-    --orange-light: #ff8c52;
-    --navy: #1b2a5c;
-    --navy-light: #2d3f7a;
-    --gold: #f5c842;
-    --white: #ffffff;
-    --off: #f7f9fc;
-    --text: #1a1a2e;
-    --muted: #6b7a99;
-    --glass: rgba(255,255,255,0.12);
-    --glass-border: rgba(255,255,255,0.22);
+    --teal: #00C9B1;
+    --teal-dark: #00A896;
+    --orange: #FF6B35;
+    --orange-light: #FF8C60;
+    --navy: #0D1B3E;
+    --navy-mid: #162447;
+    --navy-light: #1F3461;
+    --white: #FFFFFF;
+    --off-white: #F0F4FF;
+    --text-muted: rgba(255,255,255,0.65);
+    --glow-teal: 0 0 60px rgba(0,201,177,0.3);
+    --glow-orange: 0 0 60px rgba(255,107,53,0.3);
   }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: #0d1433;
+    background: var(--navy);
     color: var(--white);
     overflow-x: hidden;
-    cursor: default;
   }
 
-  /* ── BACKGROUND SCENE ── */
-  .bg-scene {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(ellipse at 20% 30%, #1a4a6b55 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 70%, #7a2d0a33 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, #0d1433 0%, #060c22 100%);
-  }
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px); opacity: 0.35;
-    animation: drift 12s ease-in-out infinite alternate;
-  }
-  .orb-1 { width: 600px; height: 600px; background: var(--teal); top: -200px; left: -150px; animation-delay: 0s; }
-  .orb-2 { width: 500px; height: 500px; background: var(--orange); bottom: -100px; right: -100px; animation-delay: -4s; }
-  .orb-3 { width: 300px; height: 300px; background: #5b3de8; top: 40%; left: 40%; animation-delay: -8s; }
-  @keyframes drift {
-    0% { transform: translate(0,0) scale(1); }
-    100% { transform: translate(40px, 30px) scale(1.08); }
-  }
-
-  /* ── GRID LINES ── */
-  .grid-lines {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(46,196,196,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(46,196,196,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  /* ── LAYOUT ── */
-  .page { position: relative; z-index: 1; }
-
-  /* ── NAV ── */
+  /* ─── NAVBAR ─── */
   nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 60px;
-    background: rgba(13,20,51,0.6);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
-    position: sticky; top: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,27,62,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
-  .nav-logo { display: flex; align-items: center; gap: 14px; }
-  .nav-logo img { height: 46px; filter: drop-shadow(0 0 12px rgba(46,196,196,0.5)); }
-  .nav-logo span { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); letter-spacing: -0.5px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
+  .nav-logo img { height: 38px; }
+  .nav-logo span { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--teal); }
   .nav-cta {
-    background: linear-gradient(135deg, var(--teal), var(--orange));
-    color: white; border: none; padding: 12px 28px; border-radius: 50px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
-    cursor: pointer; letter-spacing: 0.5px;
-    box-shadow: 0 4px 20px rgba(46,196,196,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: var(--navy);
+    border: none; padding: 0.55rem 1.4rem;
+    border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
   }
-  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(46,196,196,0.45); }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--glow-teal); }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 92vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; text-align: center;
-    padding: 80px 24px 60px;
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
   }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,201,177,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 60%, rgba(255,107,53,0.1) 0%, transparent 60%),
+                var(--navy);
+  }
+
+  /* Animated waves at bottom of hero */
+  .wave-container {
+    position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 180px; overflow: hidden;
+  }
+  .wave {
+    position: absolute; bottom: 0; left: -50%;
+    width: 200%; height: 180px;
+    border-radius: 50%;
+  }
+  .wave1 {
+    background: rgba(0,201,177,0.08);
+    animation: waveAnim 7s linear infinite;
+  }
+  .wave2 {
+    background: rgba(0,168,150,0.06);
+    animation: waveAnim 10s linear infinite reverse;
+    margin-bottom: 15px;
+  }
+  .wave3 {
+    background: rgba(255,107,53,0.05);
+    animation: waveAnim 13s linear infinite;
+    margin-bottom: 30px;
+  }
+  @keyframes waveAnim {
+    0% { transform: translateX(0) translateY(0) scaleY(1); }
+    50% { transform: translateX(-25%) translateY(-10px) scaleY(0.95); }
+    100% { transform: translateX(-50%) translateY(0) scaleY(1); }
+  }
+
+  /* Floating chat bubbles */
+  .bubbles-wrapper {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .bubble {
+    position: absolute;
+    border-radius: 50px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.5rem 1rem;
+    animation: floatBubble 8s ease-in-out infinite;
+    opacity: 0.75;
+  }
+  .bubble::after {
+    content: ''; position: absolute; bottom: -8px;
+    width: 14px; height: 14px;
+    border-radius: 0 0 12px 0;
+  }
+  .bubble-teal { background: rgba(0,201,177,0.18); border: 1px solid rgba(0,201,177,0.35); color: var(--teal); }
+  .bubble-teal::after { background: rgba(0,201,177,0.18); }
+  .bubble-orange { background: rgba(255,107,53,0.18); border: 1px solid rgba(255,107,53,0.35); color: var(--orange-light); }
+  .b1 { top: 22%; left: 8%; animation-delay: 0s; }
+  .b2 { top: 35%; right: 8%; animation-delay: 2s; }
+  .b3 { top: 60%; left: 12%; animation-delay: 4s; font-size: 0.7rem; }
+  .b4 { top: 55%; right: 14%; animation-delay: 1s; }
+  .b5 { top: 15%; right: 20%; animation-delay: 3s; font-size: 0.7rem; }
+  @keyframes floatBubble {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-16px); }
+  }
+
+  /* 3D Orb decoration */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.5;
+    animation: orbPulse 6s ease-in-out infinite;
+  }
+  .orb1 { width: 350px; height: 350px; background: var(--teal); top: -80px; left: -100px; }
+  .orb2 { width: 280px; height: 280px; background: var(--orange); bottom: 10%; right: -80px; animation-delay: 3s; }
+  .orb3 { width: 200px; height: 200px; background: #3A86FF; top: 40%; left: 40%; animation-delay: 1.5s; }
+  @keyframes orbPulse {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(1.08); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 820px; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    padding: 8px 18px; border-radius: 50px;
-    font-size: 0.82rem; color: var(--teal); font-weight: 500; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 32px;
-    animation: fadeUp 0.8s ease both;
+    background: rgba(0,201,177,0.15);
+    border: 1px solid rgba(0,201,177,0.3);
+    border-radius: 50px; padding: 0.4rem 1rem;
+    font-size: 0.82rem; color: var(--teal); font-weight: 500;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.8s ease both;
   }
   .pulse-dot {
-    width: 8px; height: 8px; background: var(--teal); border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(46,196,196,0.4);
-    animation: pulse 2s infinite;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
+    animation: pulseAnim 2s ease infinite;
   }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46,196,196,0.5); } 70% { box-shadow: 0 0 0 10px rgba(46,196,196,0); } 100% { box-shadow: 0 0 0 0 rgba(46,196,196,0); } }
+  @keyframes pulseAnim {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,201,177,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(0,201,177,0); }
+  }
 
-  .hero h1 {
+  h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    font-weight: 700; line-height: 1.1;
-    letter-spacing: -2px; margin-bottom: 24px;
-    animation: fadeUp 0.8s 0.15s ease both;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 1.12;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.8s 0.2s ease both;
   }
-  .hero h1 span.teal { color: var(--teal); }
-  .hero h1 span.orange { color: var(--orange); }
+  h1 em { font-style: italic; color: var(--teal); }
+  .orange-word { color: var(--orange); }
 
   .hero-sub {
-    font-size: 1.15rem; color: rgba(255,255,255,0.65); max-width: 560px;
-    line-height: 1.75; margin-bottom: 48px;
-    animation: fadeUp 0.8s 0.3s ease both;
+    font-size: clamp(1rem, 2vw, 1.22rem);
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 620px;
+    margin: 0 auto 2.5rem;
+    animation: fadeSlideDown 0.8s 0.4s ease both;
   }
 
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.8s 0.45s ease both; }
+  .hero-buttons {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeSlideDown 0.8s 0.6s ease both;
+  }
   .btn-primary {
-    background: linear-gradient(135deg, var(--teal) 0%, #1fc8c8 50%, var(--orange) 100%);
-    background-size: 200% 200%; background-position: 0% 50%;
-    color: white; border: none; padding: 16px 40px; border-radius: 60px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    box-shadow: 0 8px 32px rgba(46,196,196,0.35), 0 0 0 1px rgba(46,196,196,0.2);
-    transition: all 0.3s ease; letter-spacing: 0.3px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: var(--navy);
+    border: none; padding: 0.85rem 2rem;
+    border-radius: 50px; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: all 0.3s;
     text-decoration: none; display: inline-block;
   }
-  .btn-primary:hover { background-position: 100% 50%; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(46,196,196,0.5); }
-  .btn-ghost {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px); color: white;
-    padding: 16px 36px; border-radius: 60px;
-    font-size: 1rem; cursor: pointer; transition: all 0.25s;
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,201,177,0.4); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    padding: 0.85rem 2rem;
+    border-radius: 50px; font-weight: 500; font-size: 1rem;
+    cursor: pointer; transition: all 0.3s;
     text-decoration: none; display: inline-block;
   }
-  .btn-ghost:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.5); }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    margin-top: 3.5rem;
+    animation: fadeSlideDown 0.8s 0.8s ease both;
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--teal); }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-  /* ── FLOATING CARDS ── */
-  .float-cards {
-    display: flex; justify-content: center; gap: 24px;
-    flex-wrap: wrap; margin-top: 64px;
-    animation: fadeUp 0.8s 0.6s ease both;
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .float-card {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(16px); border-radius: 20px;
-    padding: 20px 24px; text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-    transition: transform 0.3s; min-width: 140px;
-    animation: floatAnim 4s ease-in-out infinite alternate;
-  }
-  .float-card:nth-child(2) { animation-delay: -1.5s; }
-  .float-card:nth-child(3) { animation-delay: -3s; }
-  .float-card:hover { transform: translateY(-6px) scale(1.03); }
-  @keyframes floatAnim { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
-  .float-card .icon { font-size: 2rem; margin-bottom: 8px; }
-  .float-card .label { font-size: 0.8rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 1px; }
-  .float-card .val { font-size: 1.1rem; font-weight: 600; color: var(--white); }
 
-  /* ── SECTION ── */
-  section { padding: 100px 24px; }
-  .section-label {
-    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px;
-    color: var(--teal); font-weight: 600; margin-bottom: 16px; text-align: center;
+  /* ─── SECTIONS ─── */
+  section { padding: 6rem 2rem; position: relative; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(0,201,177,0.12);
+    border: 1px solid rgba(0,201,177,0.25);
+    color: var(--teal); border-radius: 50px;
+    padding: 0.3rem 1rem; font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 1rem;
   }
-  .section-title {
+  .section-tag.orange {
+    background: rgba(255,107,53,0.12);
+    border-color: rgba(255,107,53,0.25);
+    color: var(--orange-light);
+  }
+
+  h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-    text-align: center; margin-bottom: 16px; letter-spacing: -1px;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
-  .section-sub { text-align: center; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto 60px; line-height: 1.7; }
+  h2 em { font-style: italic; color: var(--teal); }
 
-  /* ── HOW IT WORKS ── */
-  .steps { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
-  .step {
-    flex: 1; min-width: 220px; max-width: 280px; text-align: center;
+  .section-sub {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── WHAT IS THIS section ─── */
+  #what {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+  }
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .what-visual {
+    position: relative;
+    height: 420px;
+  }
+  .phone-mockup {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 36px;
+    padding: 1.5rem 1.2rem;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .phone-header {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 1rem;
+  }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; color: var(--navy);
+  }
+  .phone-name { font-size: 0.8rem; font-weight: 600; }
+  .online-dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF50; margin-left: auto; }
+
+  .chat-msg {
+    margin-bottom: 0.7rem;
+    animation: chatAppear 0.5s ease both;
+  }
+  .msg-them {
+    display: flex; gap: 6px; align-items: flex-end;
+  }
+  .msg-me { display: flex; justify-content: flex-end; }
+  .msg-bubble {
+    padding: 0.5rem 0.8rem;
+    border-radius: 14px;
+    font-size: 0.72rem; line-height: 1.5;
+    max-width: 170px;
+  }
+  .them-bubble {
+    background: rgba(0,201,177,0.15);
+    border: 1px solid rgba(0,201,177,0.25);
+    color: rgba(255,255,255,0.9);
+    border-bottom-left-radius: 4px;
+  }
+  .me-bubble {
+    background: rgba(255,107,53,0.2);
+    border: 1px solid rgba(255,107,53,0.3);
+    color: rgba(255,255,255,0.9);
+    border-bottom-right-radius: 4px;
+  }
+  .mini-avatar { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), #008fa0); }
+  @keyframes chatAppear {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-msg:nth-child(1) { animation-delay: 0.3s; }
+  .chat-msg:nth-child(2) { animation-delay: 1.2s; }
+  .chat-msg:nth-child(3) { animation-delay: 2.2s; }
+  .chat-msg:nth-child(4) { animation-delay: 3.5s; }
+
+  /* Floating tags around phone */
+  .float-tag {
+    position: absolute;
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.78rem;
+    display: flex; align-items: center; gap: 6px;
+    animation: floatTag 5s ease-in-out infinite;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .ft1 { top: 5%; left: -10%; animation-delay: 0s; }
+  .ft2 { bottom: 15%; right: -8%; animation-delay: 2s; }
+  .ft3 { bottom: 5%; left: 0%; animation-delay: 1s; }
+  @keyframes floatTag {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .tag-icon { font-size: 1.1rem; }
+
+  .what-text h2 { margin-bottom: 1.2rem; }
+  .what-points { list-style: none; margin-top: 2rem; }
+  .what-points li {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 1.2rem;
+  }
+  .check-icon {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(0,201,177,0.15);
+    border: 1px solid rgba(0,201,177,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal); font-size: 0.75rem; margin-top: 2px;
+  }
+  .point-title { font-weight: 600; margin-bottom: 2px; }
+  .point-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ─── HOW IT WORKS ─── */
+  #how { background: var(--navy); }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; margin-top: 1rem;
     position: relative;
   }
-  .step-number {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
-    margin: 0 auto 20px;
-    box-shadow: 0 0 0 8px rgba(46,196,196,0.1), 0 8px 24px rgba(46,196,196,0.3);
-  }
-  .step:nth-child(2) .step-number { background: linear-gradient(135deg, var(--orange), #d4550a); box-shadow: 0 0 0 8px rgba(244,107,43,0.1), 0 8px 24px rgba(244,107,43,0.3); }
-  .step:nth-child(3) .step-number { background: linear-gradient(135deg, #5b3de8, #3d2da0); box-shadow: 0 0 0 8px rgba(91,61,232,0.1), 0 8px 24px rgba(91,61,232,0.3); }
-  .step h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
-  .step p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
-  .step-connector {
-    position: absolute; top: 30px; left: calc(100% + 0px); width: 32px;
-    height: 2px; background: linear-gradient(90deg, var(--teal), var(--orange));
+  .steps-grid::before {
+    content: '';
+    position: absolute; top: 48px; left: 17%; right: 17%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--teal), rgba(255,107,53,0.5));
     opacity: 0.3;
   }
+  .step-card {
+    background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,201,177,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .step-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+  .step-card:hover::before { opacity: 1; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.4rem;
+    margin: 0 auto 1.2rem;
+    background: linear-gradient(135deg, rgba(0,201,177,0.2), rgba(0,201,177,0.05));
+    border: 1.5px solid rgba(0,201,177,0.4);
+    color: var(--teal);
+  }
+  .step-card:nth-child(2) .step-num {
+    background: linear-gradient(135deg, rgba(255,107,53,0.2), rgba(255,107,53,0.05));
+    border-color: rgba(255,107,53,0.4);
+    color: var(--orange);
+  }
+  .step-card:nth-child(3) .step-num {
+    background: linear-gradient(135deg, rgba(58,134,255,0.2), rgba(58,134,255,0.05));
+    border-color: rgba(58,134,255,0.4);
+    color: #7BB8FF;
+  }
+  .step-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .step-icon { font-size: 2rem; margin-bottom: 0.7rem; }
 
-  /* ── PRICING ── */
+  /* ─── ANIMATION / EXPLAINER ─── */
+  #explainer {
+    background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%);
+    overflow: hidden;
+  }
+  .explainer-visual {
+    position: relative;
+    height: 340px;
+    background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 3rem;
+  }
+  .explainer-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,201,177,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse at 70% 50%, rgba(255,107,53,0.08) 0%, transparent 70%);
+  }
+  .exp-center {
+    position: relative; z-index: 2;
+    text-align: center;
+  }
+  .exp-wave-visual {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; height: 80px; margin-bottom: 1.5rem;
+  }
+  .wave-bar {
+    width: 6px; border-radius: 3px;
+    animation: waveBar 1.4s ease-in-out infinite;
+  }
+  .wave-bar.teal { background: var(--teal); }
+  .wave-bar.orange { background: var(--orange); }
+  .wave-bar:nth-child(1) { animation-delay: 0s; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+  .wave-bar:nth-child(6) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(7) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(8) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(9) { animation-delay: 0s; }
+  @keyframes waveBar {
+    0%, 100% { height: 12px; }
+    50% { height: 60px; }
+  }
+  .exp-label { font-size: 1rem; color: var(--text-muted); }
+  .exp-label strong { color: var(--white); }
+
+  /* Orbiting icons */
+  .orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.08);
+  }
+  .orbit1 { width: 280px; height: 280px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .orbit2 { width: 420px; height: 420px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .orbit-icon {
+    position: absolute;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .oi1 { top: -22px; left: 50%; transform: translateX(-50%); animation: orbitSpin1 12s linear infinite; }
+  .oi2 { bottom: -22px; left: 50%; transform: translateX(-50%); animation: orbitSpin1 12s linear infinite reverse; }
+  .oi3 { left: -22px; top: 50%; transform: translateY(-50%); animation: orbitSpin2 10s linear infinite; }
+  .oi4 { right: -22px; top: 50%; transform: translateY(-50%); animation: orbitSpin2 10s linear infinite reverse; }
+  @keyframes orbitSpin1 {
+    from { transform: translateX(-50%) rotate(0deg) translateX(140px) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg) translateX(140px) rotate(-360deg); }
+  }
+  @keyframes orbitSpin2 {
+    from { transform: translateY(-50%) rotate(0deg) translateY(210px) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg) translateY(210px) rotate(-360deg); }
+  }
+
+  /* ─── PRICING ─── */
+  #pricing {
+    background: var(--navy);
+  }
   .pricing-grid {
-    display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
-    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; max-width: 760px; margin: 0 auto;
   }
   .price-card {
-    flex: 1; min-width: 280px; max-width: 360px;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px); border-radius: 28px;
-    padding: 40px 36px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
-    position: relative; overflow: hidden; transition: transform 0.3s;
+    background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 28px;
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  .price-card:hover { transform: translateY(-8px); }
-  .price-card.featured {
-    border-color: rgba(46,196,196,0.4);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(46,196,196,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  .price-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
   }
   .price-card.featured::before {
-    content: ''; position: absolute; inset: 0; border-radius: 28px;
-    background: linear-gradient(135deg, rgba(46,196,196,0.06) 0%, rgba(244,107,43,0.04) 100%);
-    pointer-events: none;
+    background: linear-gradient(90deg, var(--orange), var(--teal));
+    height: 3px;
   }
-  .price-glow {
-    position: absolute; top: -60px; right: -60px;
-    width: 180px; height: 180px; border-radius: 50%;
-    background: var(--teal); filter: blur(60px); opacity: 0.12;
-    pointer-events: none;
-  }
-  .price-card.featured .price-glow { opacity: 0.2; }
+  .price-card:hover { transform: translateY(-6px); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+  .price-card.featured { border-color: rgba(0,201,177,0.25); }
   .popular-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--teal), var(--orange));
-    color: white; font-size: 0.7rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1.5px;
-    padding: 4px 14px; border-radius: 20px; margin-bottom: 20px;
-  }
-  .price-name {
-    font-family: 'Playfair Display', serif; font-size: 1.4rem;
-    font-weight: 700; margin-bottom: 6px;
-  }
-  .price-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 28px; }
-  .price-amount {
-    display: flex; align-items: flex-start; gap: 4px; margin-bottom: 8px;
-  }
-  .price-currency { font-size: 1.5rem; font-weight: 600; color: var(--teal); margin-top: 6px; }
-  .price-number {
-    font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700;
-    line-height: 1; letter-spacing: -3px;
-  }
-  .price-duration { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 32px; }
-  .price-features { list-style: none; margin-bottom: 36px; }
-  .price-features li {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 0.9rem; color: rgba(255,255,255,0.75);
-    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .price-features li:last-child { border-bottom: none; }
-  .check {
-    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    position: absolute; top: 1rem; right: 1rem;
     background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: var(--navy);
+    font-size: 0.72rem; font-weight: 700;
+    padding: 0.3rem 0.7rem; border-radius: 50px;
+  }
+  .price-duration {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--teal); font-size: 0.85rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .price-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .price-amount {
+    display: flex; align-items: baseline; gap: 4px;
+    margin-bottom: 0.5rem;
+  }
+  .price-dollar { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); }
+  .price-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; line-height: 1; }
+  .price-card:first-child .price-num { color: var(--teal); }
+  .price-card.featured .price-num { color: var(--orange); }
+  .price-per { color: var(--text-muted); font-size: 0.85rem; }
+  .price-features { list-style: none; margin: 1.5rem 0 2rem; }
+  .price-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem; color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+  .pf-dot {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(0,201,177,0.15); border: 1px solid rgba(0,201,177,0.3);
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.65rem;
+    color: var(--teal); font-size: 0.6rem;
   }
-  .btn-book {
-    width: 100%; padding: 16px; border-radius: 16px; border: none;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+  .price-card.featured .pf-dot {
+    background: rgba(255,107,53,0.15); border-color: rgba(255,107,53,0.3);
+    color: var(--orange);
   }
-  .btn-book-primary {
-    background: linear-gradient(135deg, var(--teal) 0%, var(--orange) 100%);
-    color: white;
-    box-shadow: 0 8px 24px rgba(46,196,196,0.3);
+  .book-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: var(--navy);
+    border: none; padding: 0.85rem;
+    border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.3s;
   }
-  .btn-book-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(46,196,196,0.45); }
-  .btn-book-outline {
-    background: transparent; color: white;
-    border: 1px solid rgba(255,255,255,0.25);
+  .book-btn:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,201,177,0.35); }
+  .price-card.featured .book-btn {
+    background: linear-gradient(135deg, var(--orange), #E55B28);
   }
-  .btn-book-outline:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+  .price-card.featured .book-btn:hover { box-shadow: 0 20px 40px rgba(255,107,53,0.35); }
 
-  /* ── BOOKING MODAL ── */
+  /* ─── BOOKING MODAL ─── */
   .modal-overlay {
+    display: none;
     position: fixed; inset: 0; z-index: 1000;
-    background: rgba(6,12,34,0.9); backdrop-filter: blur(12px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px; opacity: 0; pointer-events: none;
-    transition: opacity 0.35s;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    padding: 1rem;
   }
-  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal-overlay.open { display: flex; }
   .modal {
-    background: linear-gradient(160deg, #0f1d4a 0%, #0d1433 100%);
-    border: 1px solid var(--glass-border); border-radius: 28px;
-    padding: 44px 40px; width: 100%; max-width: 500px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(46,196,196,0.1);
-    position: relative; transform: scale(0.92); transition: transform 0.35s;
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 2.5rem;
+    max-width: 520px; width: 100%;
+    position: relative;
     max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
   }
-  .modal-overlay.active .modal { transform: scale(1); }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
   .modal-close {
-    position: absolute; top: 20px; right: 20px;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    color: white; font-size: 1.1rem; cursor: pointer;
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    background: rgba(255,255,255,0.08); border: none;
+    color: var(--white); width: 34px; height: 34px;
+    border-radius: 50%; cursor: pointer; font-size: 1rem;
     display: flex; align-items: center; justify-content: center;
     transition: background 0.2s;
   }
   .modal-close:hover { background: rgba(255,255,255,0.15); }
-  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 6px; }
-  .modal-plan {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--teal), var(--orange));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; font-weight: 700; font-size: 1rem; margin-bottom: 28px;
+
+  .modal-steps { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+  .m-step {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.3s;
   }
-  .form-group { margin-bottom: 20px; }
-  .form-group label { display: block; font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .m-step.active { background: var(--teal); }
+
+  .modal-step-content { display: none; }
+  .modal-step-content.visible { display: block; }
+
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .modal-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+  .payment-box {
+    background: rgba(0,201,177,0.08);
+    border: 1px solid rgba(0,201,177,0.2);
+    border-radius: 16px; padding: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .payment-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--teal);
+    margin-bottom: 0.3rem;
+  }
+  .payment-label { font-size: 0.85rem; color: var(--text-muted); }
+
+  .pay-methods { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .pay-method {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 0.9rem 1rem;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .pay-method:hover { border-color: rgba(0,201,177,0.3); }
+  .pay-method.selected { border-color: rgba(0,201,177,0.5); background: rgba(0,201,177,0.08); }
+  .pay-icon { font-size: 1.4rem; }
+  .pay-info { flex: 1; }
+  .pay-name { font-weight: 600; font-size: 0.9rem; }
+  .pay-detail { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
+  .pay-link { color: var(--teal); text-decoration: none; font-size: 0.8rem; }
+  .pay-link:hover { text-decoration: underline; }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: rgba(255,255,255,0.8); }
   .form-input {
-    width: 100%; padding: 14px 18px; border-radius: 14px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-    color: white; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-    transition: border-color 0.2s, background 0.2s; outline: none;
+    width: 100%;
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.2s;
   }
-  .form-input:focus { border-color: var(--teal); background: rgba(46,196,196,0.08); }
-  .form-input option { background: #0d1433; }
-  .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .time-slot {
-    padding: 10px; border-radius: 10px; text-align: center;
-    border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
-    cursor: pointer; font-size: 0.85rem; color: rgba(255,255,255,0.7);
-    transition: all 0.2s;
-  }
-  .time-slot:hover { border-color: var(--teal); color: var(--teal); }
-  .time-slot.selected { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); border-color: var(--teal); color: white; font-weight: 600; }
-  .payment-section {
-    background: rgba(46,196,196,0.06); border: 1px solid rgba(46,196,196,0.18);
-    border-radius: 16px; padding: 20px; margin: 24px 0;
-  }
-  .payment-header { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--teal); margin-bottom: 16px; font-weight: 600; }
-  .payment-total { display: flex; justify-content: space-between; align-items: center; }
-  .payment-label { font-size: 0.9rem; color: rgba(255,255,255,0.6); }
-  .payment-amount { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
-  .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .modal-footer-note { font-size: 0.78rem; color: rgba(255,255,255,0.35); text-align: center; margin-top: 16px; line-height: 1.6; }
+  .form-input:focus { border-color: rgba(0,201,177,0.5); }
+  .form-input::placeholder { color: rgba(255,255,255,0.3); }
 
-  /* ── TESTIMONIALS / TRUST ── */
-  .trust-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
-  .trust-card {
-    flex: 1; min-width: 240px; max-width: 280px;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px); border-radius: 20px;
-    padding: 28px 24px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  .modal-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: var(--navy);
+    border: none; padding: 0.9rem;
+    border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
   }
-  .trust-stars { color: var(--gold); font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
-  .trust-quote { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.65; margin-bottom: 18px; font-style: italic; }
-  .trust-author { display: flex; align-items: center; gap: 12px; }
-  .avatar {
-    width: 38px; height: 38px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; font-weight: 700;
-    background: linear-gradient(135deg, var(--teal), var(--orange));
+  .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,201,177,0.3); }
+  .modal-btn.orange-btn {
+    background: linear-gradient(135deg, var(--orange), #E55B28);
   }
-  .author-name { font-weight: 600; font-size: 0.9rem; }
-  .author-tag { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .modal-btn.orange-btn:hover { box-shadow: 0 15px 35px rgba(255,107,53,0.3); }
 
-  /* ── FOOTER ── */
-  footer {
-    padding: 40px 60px; text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    color: rgba(255,255,255,0.3); font-size: 0.82rem; line-height: 1.8;
+  .gcal-btn {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--navy-light);
+    border: 1.5px solid rgba(0,201,177,0.35);
+    color: var(--teal); padding: 0.9rem;
+    border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    margin-top: 0.8rem;
   }
-  footer span.accent { color: var(--teal); }
+  .gcal-btn:hover { background: rgba(0,201,177,0.1); }
 
-  /* ── SUCCESS SCREEN ── */
-  .success-screen {
-    text-align: center; padding: 20px 0;
-    display: none;
-  }
   .success-icon {
-    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--teal), var(--orange));
+    width: 70px; height: 70px; border-radius: 50%;
+    background: rgba(0,201,177,0.15);
+    border: 2px solid rgba(0,201,177,0.4);
     display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
-    box-shadow: 0 0 0 12px rgba(46,196,196,0.12);
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    font-size: 2rem; margin: 0 auto 1.5rem;
+    animation: successPop 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
-  @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 10px; }
-  .success-screen p { color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 340px; margin: 0 auto 24px; }
+  @keyframes successPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .success-note {
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.25);
+    border-radius: 12px; padding: 1rem;
+    font-size: 0.85rem; color: rgba(255,255,255,0.8);
+    line-height: 1.6; margin: 1rem 0;
+  }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(46,196,196,0.3); border-radius: 3px; }
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--navy-mid); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5rem; margin-top: 1rem;
+  }
+  .testi-card {
+    background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px; padding: 1.5rem;
+    transition: transform 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-4px); }
+  .testi-stars { color: #FFD700; font-size: 0.85rem; margin-bottom: 0.8rem; letter-spacing: 2px; }
+  .testi-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: var(--navy);
+  }
+  .testi-name { font-size: 0.85rem; font-weight: 600; }
+  .testi-loc { font-size: 0.75rem; color: var(--text-muted); }
 
+  /* ─── FAQ ─── */
+  #faq { background: var(--navy); }
+  .faq-list { max-width: 720px; }
+  .faq-item {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item:hover { border-color: rgba(0,201,177,0.2); }
+  .faq-q {
+    width: 100%; background: none; border: none; color: var(--white);
+    text-align: left; padding: 1.2rem 1.5rem;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .faq-icon {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(0,201,177,0.12);
+    border: 1px solid rgba(0,201,177,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal); font-size: 0.9rem; flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    display: none;
+    padding: 0 1.5rem 1.2rem;
+    font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 0.5rem; }
+  .footer-logo span { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .footer-tagline { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal); }
+  .footer-copy { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
+
+  /* Scroll animations */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* Mobile */
   @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-logo span { display: none; }
-    .hero h1 { letter-spacing: -1px; }
-    .step-connector { display: none; }
-    .modal { padding: 32px 24px; }
-    .card-row { grid-template-columns: 1fr; }
-    .time-slots { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 0.8rem 1rem; }
+    .nav-links { display: none; }
+    .what-grid, .steps-grid, .pricing-grid, .testi-grid { grid-template-columns: 1fr; }
+    .steps-grid::before { display: none; }
+    .what-visual { height: 300px; }
+    .orbit2 { width: 300px; height: 300px; }
+    .hero-stats { gap: 1.5rem; }
+    .bubbles-wrapper .b1, .b3, .b5 { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="bg-scene">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
-<div class="grid-lines"></div>
-
-<div class="page">
-
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav>
   <div class="nav-logo">
-    <svg width="46" height="46" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <!-- simplified wave + bubbles -->
+    <svg width="38" height="38" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="waveG" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#2ec4c4"/>
-          <stop offset="100%" stop-color="#f46b2b"/>
+          <stop offset="0%" style="stop-color:#00BCD4"/>
+          <stop offset="100%" style="stop-color:#0288D1"/>
+        </linearGradient>
+        <linearGradient id="orangeG" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#FF9800"/>
+          <stop offset="100%" style="stop-color:#FF5722"/>
         </linearGradient>
       </defs>
-      <path d="M20,110 Q60,70 100,100 Q140,130 180,90" stroke="url(#waveG)" stroke-width="12" fill="none" stroke-linecap="round"/>
-      <ellipse cx="80" cy="72" rx="30" ry="22" fill="#2ec4c4"/>
-      <ellipse cx="118" cy="78" rx="22" ry="17" fill="#f46b2b"/>
-      <circle cx="68" cy="72" r="3" fill="white"/>
-      <circle cx="80" cy="72" r="3" fill="white"/>
-      <circle cx="92" cy="72" r="3" fill="white"/>
-      <circle cx="109" cy="78" r="2.5" fill="white"/>
-      <circle cx="118" cy="78" r="2.5" fill="white"/>
+      <path d="M20 120 Q60 80 100 110 Q140 140 180 100" stroke="url(#waveG)" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <path d="M20 135 Q60 95 100 125 Q140 155 180 115" stroke="url(#orangeG)" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <ellipse cx="85" cy="72" rx="28" ry="22" fill="#00BCD4" opacity="0.9"/>
+      <ellipse cx="118" cy="75" rx="22" ry="18" fill="#FF7043" opacity="0.9"/>
+      <circle cx="79" cy="72" r="2.5" fill="white"/>
+      <circle cx="87" cy="72" r="2.5" fill="white"/>
+      <circle cx="95" cy="72" r="2.5" fill="white"/>
+      <circle cx="114" cy="75" r="2.5" fill="white"/>
+      <circle cx="122" cy="75" r="2.5" fill="white"/>
     </svg>
     <span>Wavelength</span>
   </div>
-  <a href="#pricing" class="nav-cta">Book a Chat</a>
+  <ul class="nav-links">
+    <li><a href="#what">About</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Book a Chat →</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">
-    <div class="pulse-dot"></div>
-    Real Human Conversations
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Animated floating bubbles -->
+  <div class="bubbles-wrapper">
+    <div class="bubble bubble-teal b1">💬 No judgment here</div>
+    <div class="bubble bubble-orange b2">🌊 Just a friendly chat</div>
+    <div class="bubble bubble-teal b3">✨ Feel heard</div>
+    <div class="bubble bubble-orange b4">😊 You're not alone</div>
+    <div class="bubble bubble-teal b5">🌿 Relax & share freely</div>
   </div>
-  <h1>Feeling lonely?<br><span class="teal">Just need someone</span><br>to <span class="orange">talk to?</span></h1>
-  <p class="hero-sub">A relaxed, judgment-free conversation where you can share anything freely. We keep things light, positive, and comfortable — so you feel heard, relaxed, and happier by the end.</p>
-  <div class="hero-actions">
-    <a href="#pricing" class="btn-primary">Book Your Session →</a>
-    <a href="#how" class="btn-ghost">How it works</a>
+
+  <!-- Wave animation -->
+  <div class="wave-container">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
   </div>
-  <div class="float-cards">
-    <div class="float-card">
-      <div class="icon">💬</div>
-      <div class="val">100% Human</div>
-      <div class="label">Real conversation</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="pulse-dot"></div>
+      Slots Available This Week
     </div>
-    <div class="float-card">
-      <div class="icon">🔒</div>
-      <div class="val">No Judgment</div>
-      <div class="label">Safe space</div>
+
+    <h1>
+      You Deserve a <em>Real</em> Conversation<br>
+      With a <span class="orange-word">Real</span> Human
+    </h1>
+
+    <p class="hero-sub">
+      Feeling lonely, overwhelmed, or just need someone who truly listens?
+      Book a relaxed, judgment-free chat — no therapy, no pressure.
+      Just a warm, genuine conversation that leaves you feeling lighter.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#pricing" class="btn-primary">✦ Book Your Session Now</a>
+      <a href="#what" class="btn-secondary">How It Works ↓</a>
     </div>
-    <div class="float-card">
-      <div class="icon">✨</div>
-      <div class="val">Not Therapy</div>
-      <div class="label">Just a chat</div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Judgment Free</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">30–60</div>
+        <div class="stat-label">Minutes of Real Talk</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Topics Welcome</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- WHAT IS THIS -->
+<section id="what">
+  <div class="container">
+    <div class="what-grid">
+      <!-- Visual -->
+      <div class="what-visual reveal">
+        <div class="phone-mockup">
+          <div class="phone-header">
+            <div class="avatar">W</div>
+            <div>
+              <div class="phone-name">Wavelength Chat</div>
+              <div style="font-size:0.7rem; color: rgba(255,255,255,0.4);">Your listener is here</div>
+            </div>
+            <div class="online-dot"></div>
+          </div>
+
+          <div class="chat-msg msg-them">
+            <div class="mini-avatar"></div>
+            <div class="msg-bubble them-bubble">Hey! I've just been feeling really out of it lately…</div>
+          </div>
+          <div class="chat-msg msg-me">
+            <div class="msg-bubble me-bubble">I'm all ears. Take your time — there's no rush here 🌊</div>
+          </div>
+          <div class="chat-msg msg-them">
+            <div class="mini-avatar"></div>
+            <div class="msg-bubble them-bubble">Wow, I already feel better just saying that out loud.</div>
+          </div>
+          <div class="chat-msg msg-me">
+            <div class="msg-bubble me-bubble">That's what this space is for. You deserve to be heard ✨</div>
+          </div>
+        </div>
+
+        <!-- Floating tags -->
+        <div class="float-tag ft1">
+          <span class="tag-icon">🔒</span>
+          <span>Private &amp; Safe</span>
+        </div>
+        <div class="float-tag ft2">
+          <span class="tag-icon">💙</span>
+          <span>No Judgment</span>
+        </div>
+        <div class="float-tag ft3">
+          <span class="tag-icon">🌿</span>
+          <span>Totally Relaxed</span>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="what-text">
+        <span class="section-tag">What Is This?</span>
+        <h2>A Space Where You Can <em>Breathe</em> &amp; Be You</h2>
+        <p class="section-sub">
+          This isn't therapy. This isn't coaching. It's something rarer — a genuine, unhurried conversation with a human who actually cares about how you're doing.
+        </p>
+        <ul class="what-points">
+          <li>
+            <div class="check-icon">✓</div>
+            <div>
+              <div class="point-title">Talk About Anything</div>
+              <div class="point-desc">Life, stress, dreams, relationships, that thing you can't tell anyone else. Nothing is too small or too big.</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon">✓</div>
+            <div>
+              <div class="point-title">Zero Pressure, Full Presence</div>
+              <div class="point-desc">No advice you didn't ask for. No judgment. Just someone who's fully present and actually listening.</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon">✓</div>
+            <div>
+              <div class="point-title">Leave Feeling Lighter</div>
+              <div class="point-desc">Being heard is healing. By the end of your session, you'll feel understood, relaxed, and a little happier.</div>
+            </div>
+          </li>
+          <li>
+            <div class="check-icon">✓</div>
+            <div>
+              <div class="point-title">Not Therapy — Just Human</div>
+              <div class="point-desc">A professional but warm, casual conversation — like talking to a thoughtful friend who gives you their full attention.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIMATED EXPLAINER -->
+<section id="explainer">
+  <div class="container" style="text-align:center">
+    <span class="section-tag orange">The Wavelength Effect</span>
+    <h2 style="max-width:600px; margin: 0 auto 0.5rem;">When Two People <em>Truly Connect</em>, Something Shifts</h2>
+    <p class="section-sub" style="margin: 0 auto 0;">That shift — that sense of relief, warmth, and being seen — is what we create, every session.</p>
+
+    <div class="explainer-visual reveal">
+      <!-- Orbit rings -->
+      <div class="orbit-ring orbit1">
+        <div class="orbit-icon oi1">💬</div>
+        <div class="orbit-icon oi2">🌊</div>
+      </div>
+      <div class="orbit-ring orbit2">
+        <div class="orbit-icon oi3">😌</div>
+        <div class="orbit-icon oi4">✨</div>
+      </div>
+
+      <div class="exp-center">
+        <div class="exp-wave-visual">
+          <div class="wave-bar teal"></div>
+          <div class="wave-bar teal"></div>
+          <div class="wave-bar teal"></div>
+          <div class="wave-bar teal"></div>
+          <div class="wave-bar teal"></div>
+          <div class="wave-bar orange"></div>
+          <div class="wave-bar orange"></div>
+          <div class="wave-bar orange"></div>
+          <div class="wave-bar orange"></div>
+        </div>
+        <div class="exp-label">
+          <strong>You speak. I listen. The wave builds.</strong><br>
+          Your words create the wavelength. I match it, hold it, reflect it back.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- HOW IT WORKS -->
 <section id="how">
-  <div class="section-label">The Process</div>
-  <h2 class="section-title">Simple as 1, 2, 3</h2>
-  <p class="section-sub">Pay first to confirm your slot, then pick your time and show up. That's it.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-number">1</div>
-      <h3>Choose Your Plan</h3>
-      <p>Pick the 30-minute or 1-hour session that feels right for you today.</p>
-      <div class="step-connector"></div>
+  <div class="container">
+    <span class="section-tag">How It Works</span>
+    <h2>Simple. Seamless. <em>Meaningful.</em></h2>
+    <p class="section-sub">Three easy steps stand between you and a conversation that could genuinely change your day.</p>
+
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <div class="step-icon">💳</div>
+        <div class="step-title">Choose &amp; Pay</div>
+        <div class="step-desc">Pick your session length — 30 minutes or 1 hour. Complete your payment securely to confirm your spot.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">2</div>
+        <div class="step-icon">📅</div>
+        <div class="step-title">Book Your Time</div>
+        <div class="step-desc">After payment, pick a time that works for you from the available slots on the booking calendar.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">3</div>
+        <div class="step-icon">🌊</div>
+        <div class="step-title">Show Up &amp; Talk</div>
+        <div class="step-desc">Both of us get a confirmation. You receive the meeting link. We connect — and the real conversation begins.</div>
+      </div>
     </div>
-    <div class="step">
-      <div class="step-number">2</div>
-      <h3>Pay & Book</h3>
-      <p>Secure payment first, then choose your preferred day and time slot.</p>
-      <div class="step-connector"></div>
-    </div>
-    <div class="step">
-      <div class="step-number">3</div>
-      <h3>Just Talk</h3>
-      <p>Show up, be yourself, and enjoy a genuine human conversation — no agenda needed.</p>
+
+    <div style="margin-top:2.5rem; background: rgba(0,201,177,0.08); border: 1px solid rgba(0,201,177,0.2); border-radius: 16px; padding: 1.2rem 1.5rem; max-width: 600px; display: flex; gap: 12px; align-items: flex-start;">
+      <div style="font-size:1.4rem; margin-top:2px;">🔔</div>
+      <div>
+        <div style="font-weight:600; margin-bottom:4px;">Confirmation to Both of Us</div>
+        <div style="font-size:0.88rem; color: var(--text-muted); line-height:1.6;">Once you book, you'll get an email confirmation with your session details and meeting link. I'll receive a notification too — so we're both ready when the moment arrives.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section id="pricing" style="background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-  <div class="section-label">Pricing</div>
-  <h2 class="section-title">Pick Your Session</h2>
-  <p class="section-sub">Payment is collected before booking to confirm your slot. No subscriptions, no commitments.</p>
-  <div class="pricing-grid">
+<section id="pricing">
+  <div class="container" style="text-align:center">
+    <span class="section-tag">Investment in Yourself</span>
+    <h2>Simple Pricing, <em>Real Value</em></h2>
+    <p class="section-sub" style="margin: 0 auto 3rem;">Less than the cost of a lunch. More valuable than you might expect. Choose what feels right for you.</p>
 
-    <!-- 30 min -->
-    <div class="price-card">
-      <div class="price-glow"></div>
-      <div class="price-name">Quick Connect</div>
-      <div class="price-tagline">Perfect for a light, feel-good chat</div>
-      <div class="price-amount">
-        <div class="price-currency">$</div>
-        <div class="price-number">15</div>
+    <div class="pricing-grid">
+      <!-- 30 min -->
+      <div class="price-card reveal">
+        <div class="price-duration">⏱ 30 Minutes</div>
+        <div class="price-title">Clarity Session</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">15</span>
+        </div>
+        <div class="price-per">one-time · USD</div>
+        <ul class="price-features">
+          <li><div class="pf-dot">✓</div> 30 min voice/video call</li>
+          <li><div class="pf-dot">✓</div> 100% judgment-free</li>
+          <li><div class="pf-dot">✓</div> Pick your topic freely</li>
+          <li><div class="pf-dot">✓</div> Email confirmation</li>
+          <li><div class="pf-dot">✓</div> Google Calendar booking</li>
+        </ul>
+        <button class="book-btn" onclick="openModal('30min', 15)">Book This Session →</button>
       </div>
-      <div class="price-duration">for 30 minutes</div>
-      <ul class="price-features">
-        <li><div class="check">✓</div> 30-minute live conversation</li>
-        <li><div class="check">✓</div> Judgment-free, relaxed space</li>
-        <li><div class="check">✓</div> Share anything on your mind</li>
-        <li><div class="check">✓</div> Flexible time slots</li>
-      </ul>
-      <button class="btn-book btn-book-outline" onclick="openModal('30min','$15')">Book 30 Minutes</button>
+
+      <!-- 1 hr -->
+      <div class="price-card featured reveal reveal-delay-1">
+        <div class="popular-badge">Most Popular</div>
+        <div class="price-duration" style="color: var(--orange);">⏱ 60 Minutes</div>
+        <div class="price-title">Deep Dive Session</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">25</span>
+        </div>
+        <div class="price-per">one-time · USD</div>
+        <ul class="price-features">
+          <li><div class="pf-dot">✓</div> Full 1-hour conversation</li>
+          <li><div class="pf-dot">✓</div> Go deep on any topic</li>
+          <li><div class="pf-dot">✓</div> 100% judgment-free</li>
+          <li><div class="pf-dot">✓</div> Priority booking slot</li>
+          <li><div class="pf-dot">✓</div> Email confirmation</li>
+        </ul>
+        <button class="book-btn" onclick="openModal('60min', 25)">Book This Session →</button>
+      </div>
     </div>
 
-    <!-- 1 hour -->
-    <div class="price-card featured">
-      <div class="price-glow"></div>
-      <div class="popular-badge">✦ Most Popular</div>
-      <div class="price-name">Deep Dive</div>
-      <div class="price-tagline">For when you really need to be heard</div>
-      <div class="price-amount">
-        <div class="price-currency" style="color: var(--orange);">$</div>
-        <div class="price-number">25</div>
-      </div>
-      <div class="price-duration">for 1 hour</div>
-      <ul class="price-features">
-        <li><div class="check" style="background: linear-gradient(135deg, var(--orange), #d4550a);">✓</div> 60-minute live conversation</li>
-        <li><div class="check" style="background: linear-gradient(135deg, var(--orange), #d4550a);">✓</div> More time to open up & relax</li>
-        <li><div class="check" style="background: linear-gradient(135deg, var(--orange), #d4550a);">✓</div> Deeper, meaningful connection</li>
-        <li><div class="check" style="background: linear-gradient(135deg, var(--orange), #d4550a);">✓</div> Flexible time slots</li>
-        <li><div class="check" style="background: linear-gradient(135deg, var(--orange), #d4550a);">✓</div> Best value per minute</div>
-      </ul>
-      <button class="btn-book btn-book-primary" onclick="openModal('1hr','$25')">Book 1 Hour</button>
-    </div>
-
+    <p style="margin-top:1.5rem; font-size:0.85rem; color: var(--text-muted);">
+      🔒 Payment is processed manually — secure and straightforward. No subscription. No hidden fees.
+    </p>
   </div>
 </section>
 
-<!-- TRUST -->
-<section>
-  <div class="section-label">Kind Words</div>
-  <h2 class="section-title">People Feel Better</h2>
-  <p class="section-sub">This isn't therapy — it's just a warm, human connection when you need it most.</p>
-  <div class="trust-grid">
-    <div class="trust-card">
-      <div class="trust-stars">★★★★★</div>
-      <div class="trust-quote">"I was nervous at first, but within minutes I felt so at ease. We just talked, laughed, and I felt genuinely lighter afterward."</div>
-      <div class="trust-author">
-        <div class="avatar">S</div>
-        <div>
-          <div class="author-name">Sarah M.</div>
-          <div class="author-tag">30-minute session</div>
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <span class="section-tag">What People Say</span>
+    <h2>They Came In Uncertain. <em>They Left Lighter.</em></h2>
+    <div class="testi-grid" style="margin-top:2rem;">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I didn't expect much — I just needed to talk. By the end I felt genuinely understood for the first time in months. Incredible."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg,#00C9B1,#008fa0);">S</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-loc">United States</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="trust-card">
-      <div class="trust-stars">★★★★★</div>
-      <div class="trust-quote">"No pressure, no agenda. Just a real conversation. Sometimes that's exactly what you need more than anything else."</div>
-      <div class="trust-author">
-        <div class="avatar">J</div>
-        <div>
-          <div class="author-name">James K.</div>
-          <div class="author-tag">1-hour session</div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"No advice I didn't ask for, no judgment, just someone truly listening. I booked the 30-min session and couldn't stop talking. Worth every penny."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg,#FF6B35,#E55B28);">R</div>
+          <div>
+            <div class="testi-name">Ravi K.</div>
+            <div class="testi-loc">United Kingdom</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="trust-card">
-      <div class="trust-stars">★★★★★</div>
-      <div class="trust-quote">"I've booked three times now. It's the most affordable, genuine way to feel connected and heard without any complexity."</div>
-      <div class="trust-author">
-        <div class="avatar">P</div>
-        <div>
-          <div class="author-name">Priya R.</div>
-          <div class="author-tag">Regular visitor</div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I was going through a rough patch and didn't want therapy. This was perfect — warm, light, and I felt so much better after just 30 minutes."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg,#3A86FF,#1A5FBF);">A</div>
+          <div>
+            <div class="testi-name">Amara L.</div>
+            <div class="testi-loc">Canada</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <span class="section-tag">Questions?</span>
+    <h2>Everything You <em>Wondered</em></h2>
+    <div class="faq-list" style="margin-top:2rem;">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is this therapy or counseling?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Absolutely not. This is a friendly, casual human conversation. I'm not a therapist or counselor. Think of it as a warm, supportive chat with someone who's fully present and genuinely cares about how you're feeling. If you need professional mental health support, I'd always encourage you to seek that too.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What can we talk about?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Literally anything — work stress, relationships, loneliness, a big decision, something funny that happened, a dream you're chasing, or just how your week went. There are no rules and no wrong topics. This is your time.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How does payment work?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Payment is done manually — I accept PayPal and Wise. After you click Book, you'll see my payment details. Complete the payment, note your reference number, and then book your slot on the calendar. Once I verify your payment, I'll send you a confirmation email with the meeting link.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I schedule my session?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">After payment, you'll get access to my Google Calendar booking link where you can see my real-time availability and pick a slot that works perfectly for your timezone. It's quick and easy.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is this confidential?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Completely. What you share in our conversation stays between us. I take your privacy very seriously. You can speak freely, openly, and without any worry.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What if I need to reschedule?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Life happens! Just send me an email at least 6 hours before your session and we'll reschedule you to a time that works. I'm flexible and understanding.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section style="padding: 4rem 2rem; background: linear-gradient(135deg, rgba(0,201,177,0.12), rgba(255,107,53,0.08)); border-top: 1px solid rgba(0,201,177,0.1); border-bottom: 1px solid rgba(0,201,177,0.1); text-align:center;">
+  <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); margin-bottom:1rem;">
+    The Conversation That Changes<br>Your Day Is <em>One Click Away</em>
+  </h2>
+  <p style="color: var(--text-muted); margin-bottom:2rem; font-size:1.05rem;">No commitment. No judgment. Just a human who's here for you.</p>
+  <a href="#pricing" class="btn-primary" style="font-size:1.05rem; padding:1rem 2.5rem;">✦ Book Your Session — Start Feeling Better</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">
-    <span class="accent">Wavelength</span>
+  <div class="footer-logo">
+    <svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 120 Q60 80 100 110 Q140 140 180 100" stroke="#00C9B1" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <ellipse cx="85" cy="72" rx="28" ry="22" fill="#00C9B1" opacity="0.9"/>
+      <ellipse cx="118" cy="75" rx="22" ry="18" fill="#FF7043" opacity="0.9"/>
+    </svg>
+    <span>Wavelength</span>
   </div>
-  This is not therapy or counseling — just a genuine human conversation.<br>
-  <span class="accent">wavelength.chat</span> · Built with care for anyone who just needs to talk.
+  <div class="footer-tagline">Feeling lonely or just need someone to talk to? I'm here.</div>
+  <div class="footer-links">
+    <a href="#what">About</a>
+    <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="mailto:your@email.com">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Wavelength. All rights reserved. | Not a therapy or counseling service.</div>
 </footer>
 
-</div><!-- end .page -->
 
 <!-- BOOKING MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modalBox">
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
 
-    <!-- FORM VIEW -->
-    <div id="formView">
-      <h2>Book Your Session</h2>
-      <div class="modal-plan" id="planLabel">30-minute · $15</div>
-
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" class="form-input" id="fieldName" placeholder="e.g. Alex Johnson">
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" class="form-input" id="fieldEmail" placeholder="you@example.com">
-      </div>
-      <div class="form-group">
-        <label>Preferred Date</label>
-        <input type="date" class="form-input" id="fieldDate" min="">
-      </div>
-      <div class="form-group">
-        <label>Pick a Time Slot</label>
-        <div class="time-slots" id="timeSlots">
-          <div class="time-slot" onclick="selectSlot(this)">9:00 AM</div>
-          <div class="time-slot" onclick="selectSlot(this)">10:30 AM</div>
-          <div class="time-slot" onclick="selectSlot(this)">12:00 PM</div>
-          <div class="time-slot" onclick="selectSlot(this)">2:00 PM</div>
-          <div class="time-slot" onclick="selectSlot(this)">4:00 PM</div>
-          <div class="time-slot" onclick="selectSlot(this)">6:00 PM</div>
-        </div>
-      </div>
-
-      <div class="payment-section">
-        <div class="payment-header">💳 Secure Payment</div>
-        <div class="form-group" style="margin-bottom:14px;">
-          <label>Card Number</label>
-          <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" id="cardNum" oninput="formatCard(this)">
-        </div>
-        <div class="card-row">
-          <div class="form-group" style="margin-bottom:0">
-            <label>Expiry</label>
-            <input type="text" class="form-input" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)">
-          </div>
-          <div class="form-group" style="margin-bottom:0">
-            <label>CVV</label>
-            <input type="text" class="form-input" placeholder="···" maxlength="3">
-          </div>
-        </div>
-        <div style="margin-top: 18px;">
-          <div class="payment-total">
-            <span class="payment-label">Total due now</span>
-            <span class="payment-amount" id="totalAmt">$15</span>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn-book btn-book-primary" style="font-size:1rem;" onclick="submitBooking()">
-        Pay &amp; Confirm Booking →
-      </button>
-      <div class="modal-footer-note">🔒 Payments are encrypted &amp; secure. You'll receive a confirmation email with the call link right after payment.</div>
+    <div class="modal-steps">
+      <div class="m-step active" id="mstep1"></div>
+      <div class="m-step" id="mstep2"></div>
+      <div class="m-step" id="mstep3"></div>
     </div>
 
-    <!-- SUCCESS VIEW -->
-    <div class="success-screen" id="successView">
+    <!-- STEP 1: PAYMENT -->
+    <div class="modal-step-content visible" id="step1">
+      <h3>Step 1 — Complete Payment</h3>
+      <p class="modal-sub">To secure your slot, please send the payment using one of the options below. Keep your payment reference — you'll need it in the next step.</p>
+
+      <div class="payment-box">
+        <div id="modal-session-label" style="font-size:0.85rem; color: var(--text-muted); margin-bottom:4px;">30-minute Clarity Session</div>
+        <div class="payment-amount" id="modal-price">$15</div>
+        <div class="payment-label">One-time payment · USD</div>
+      </div>
+
+      <div class="pay-methods">
+        <div class="pay-method selected" onclick="selectPayment(this)">
+          <div class="pay-icon">🅿️</div>
+          <div class="pay-info">
+            <div class="pay-name">PayPal</div>
+            <div class="pay-detail">
+              Send to: <a class="pay-link" href="https://paypal.me/YOURPAYPALLINK" target="_blank">paypal.me/YourName</a>
+              <span style="color:rgba(255,255,255,0.35)"> · Include your name in the note</span>
+            </div>
+          </div>
+        </div>
+        <div class="pay-method" onclick="selectPayment(this)">
+          <div class="pay-icon">🏦</div>
+          <div class="pay-info">
+            <div class="pay-name">Wise (TransferWise)</div>
+            <div class="pay-detail">Email: <span style="color:var(--teal)">your@email.com</span> · Currency: USD</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,107,53,0.08); border:1px solid rgba(255,107,53,0.2); border-radius:12px; padding:0.9rem; font-size:0.82rem; color:rgba(255,255,255,0.7); line-height:1.6; margin-bottom:1.2rem;">
+        ⚡ After sending payment, please note your <strong style="color:#FF8C60">transaction ID / reference number</strong>. You'll need it to complete booking on the next screen.
+      </div>
+
+      <button class="modal-btn" onclick="goStep(2)">I've Sent the Payment → Next Step</button>
+    </div>
+
+    <!-- STEP 2: BOOKING FORM -->
+    <div class="modal-step-content" id="step2">
+      <h3>Step 2 — Your Details</h3>
+      <p class="modal-sub">Fill in your details below. Once submitted, I'll verify your payment and send you a calendar confirmation within a few hours.</p>
+
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" id="fname" placeholder="e.g. Sarah" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Email</label>
+        <input class="form-input" type="email" id="femail" placeholder="you@email.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Payment Reference / Transaction ID</label>
+        <input class="form-input" type="text" id="fpayref" placeholder="e.g. PayPal ref #1234567" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Time Zone</label>
+        <input class="form-input" type="text" id="ftimezone" placeholder="e.g. EST, IST, GMT+1" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Anything you'd like me to know? (optional)</label>
+        <textarea class="form-input" id="fnote" rows="2" placeholder="How you're feeling, topic you'd like to talk about, etc."></textarea>
+      </div>
+
+      <button class="modal-btn orange-btn" onclick="submitForm()">Submit &amp; Book My Slot →</button>
+      <div style="text-align:center; margin-top:0.7rem;">
+        <span style="font-size:0.8rem; color:var(--text-muted); cursor:pointer;" onclick="goStep(1)">← Back to Payment</span>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONFIRMATION + GCAL -->
+    <div class="modal-step-content" id="step3">
       <div class="success-icon">✓</div>
-      <h2>You're Booked!</h2>
-      <p>Payment confirmed. A confirmation with your session link has been sent to your email. We can't wait to talk with you! 🌊</p>
-      <button class="btn-primary" onclick="closeModal()" style="margin-top:8px;">Done</button>
-    </div>
+      <h3 style="text-align:center;">You're Almost There! 🎉</h3>
+      <p class="modal-sub" style="text-align:center;">Your details have been submitted. I'll verify your payment and you'll receive an email confirmation within a few hours.</p>
 
+      <div class="success-note">
+        📅 <strong style="color:#FF8C60">Last step:</strong> Click below to pick your exact time slot from my live calendar. Choose a time that works for your timezone — our session will happen right when you select!
+      </div>
+
+      <a class="gcal-btn" id="gcal-link" href="https://calendar.app.google/YOURBOOKINGLINK" target="_blank">
+        📅 Pick Your Time on Google Calendar
+      </a>
+
+      <div style="margin-top:1.2rem; padding:1rem; background:rgba(0,201,177,0.08); border-radius:12px; font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.6;">
+        🔔 You and I will both receive a confirmation email with the meeting link once your slot is booked and payment is verified. If you don't hear from me within 12 hours, please email <strong style="color:var(--teal)">your@email.com</strong>
+      </div>
+
+      <button class="modal-btn" style="margin-top:1rem;" onclick="closeModal()">Done — I'll Check My Email</button>
+    </div>
   </div>
 </div>
 
 <script>
-  // Set min date to today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('fieldDate').min = today;
+  // ─── Modal ───
+  let currentSession = '';
+  let currentPrice = 0;
 
-  let selectedPlan = '30min';
-  let selectedPrice = '$15';
-  let selectedSlot = null;
-
-  function openModal(plan, price) {
-    selectedPlan = plan;
-    selectedPrice = price;
-    document.getElementById('planLabel').textContent =
-      (plan === '30min' ? '30-minute · ' : '1-hour · ') + price;
-    document.getElementById('totalAmt').textContent = price;
-    document.getElementById('formView').style.display = 'block';
-    document.getElementById('successView').style.display = 'none';
-    // Reset slots
-    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-    selectedSlot = null;
-    document.getElementById('modalOverlay').classList.add('active');
+  function openModal(session, price) {
+    currentSession = session;
+    currentPrice = price;
+    const label = session === '30min' ? '30-minute Clarity Session' : '60-minute Deep Dive Session';
+    document.getElementById('modal-session-label').textContent = label;
+    document.getElementById('modal-price').textContent = '$' + price;
+    goStep(1);
+    document.getElementById('bookingModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
+    document.getElementById('bookingModal').classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  document.getElementById('bookingModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function goStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById('step'+i).classList.remove('visible');
+      document.getElementById('mstep'+i).classList.remove('active');
+    });
+    document.getElementById('step'+n).classList.add('visible');
+    for(let i=1; i<=n; i++) document.getElementById('mstep'+i).classList.add('active');
   }
 
-  function selectSlot(el) {
-    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  function selectPayment(el) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
     el.classList.add('selected');
-    selectedSlot = el.textContent;
   }
 
-  function formatCard(input) {
-    let v = input.value.replace(/\D/g,'').substring(0,16);
-    input.value = v.replace(/(.{4})/g,'$1 ').trim();
+  function submitForm() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const ref = document.getElementById('fpayref').value.trim();
+    if (!name || !email || !ref) {
+      alert('Please fill in your name, email, and payment reference to continue.');
+      return;
+    }
+
+    // Build mailto link for notification
+    const session = currentSession === '30min' ? '30-Minute Clarity Session ($15)' : '60-Minute Deep Dive ($25)';
+    const timezone = document.getElementById('ftimezone').value.trim() || 'Not specified';
+    const note = document.getElementById('fnote').value.trim() || 'None';
+    const subject = encodeURIComponent('New Wavelength Booking — ' + name);
+    const body = encodeURIComponent(
+      'NEW BOOKING RECEIVED\n\n' +
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Session: ' + session + '\n' +
+      'Payment Ref: ' + ref + '\n' +
+      'Timezone: ' + timezone + '\n' +
+      'Note: ' + note + '\n\n' +
+      'Please verify payment and send calendar confirmation.'
+    );
+
+    // Open mailto to notify owner
+    window.location.href = 'mailto:your@email.com?subject=' + subject + '&body=' + body;
+
+    // Update Google Calendar link with session info
+    document.getElementById('gcal-link').href = 'https://calendar.app.google/YOURBOOKINGLINK';
+
+    goStep(3);
   }
 
-  function formatExpiry(input) {
-    let v = input.value.replace(/\D/g,'').substring(0,4);
-    if (v.length > 2) v = v.substring(0,2) + ' / ' + v.substring(2);
-    input.value = v;
+  // ─── FAQ ───
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
   }
 
-  function submitBooking() {
-    const name = document.getElementById('fieldName').value.trim();
-    const email = document.getElementById('fieldEmail').value.trim();
-    const date = document.getElementById('fieldDate').value;
-    const card = document.getElementById('cardNum').value.replace(/\s/g,'');
+  // ─── Scroll Reveal ───
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
 
-    if (!name) { alert('Please enter your name.'); return; }
-    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
-    if (!date) { alert('Please pick a date.'); return; }
-    if (!selectedSlot) { alert('Please pick a time slot.'); return; }
-    if (card.length < 16) { alert('Please enter a valid card number.'); return; }
-
-    // Simulate processing
-    const btn = event.target;
-    btn.textContent = 'Processing...';
-    btn.disabled = true;
-
-    setTimeout(() => {
-      document.getElementById('formView').style.display = 'none';
-      document.getElementById('successView').style.display = 'block';
-      btn.textContent = 'Pay & Confirm Booking →';
-      btn.disabled = false;
-    }, 1800);
-  }
+  // ─── Navbar on scroll ───
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(13,27,62,0.98)';
+    } else {
+      nav.style.background = 'rgba(13,27,62,0.85)';
+    }
+  });
 </script>
 </body>
 </html>
